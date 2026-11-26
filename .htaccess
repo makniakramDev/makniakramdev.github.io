@@ -1,0 +1,36 @@
+# #EpikNOW · Apache settings (Oxahost / cPanel). Upload together with the other files.
+Options -Indexes
+DirectoryIndex index.html
+
+# Force HTTPS (required for install, camera and notifications)
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+  # /admin → /admin.html
+  RewriteRule ^admin/?$ /admin.html [L]
+</IfModule>
+
+AddType application/manifest+json .webmanifest
+AddType font/woff2 .woff2
+AddType text/javascript .js .mjs
+AddDefaultCharset utf-8
+
+<IfModule mod_headers.c>
+  # Always fetch the newest pages, service worker and manifest
+  <FilesMatch "^(index\.html|admin\.html|sw\.js|manifest\.webmanifest)$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+  <FilesMatch "\.(png|jpg|jpeg|webp|woff2|ico)$">
+    Header set Cache-Control "public, max-age=604800"
+  </FilesMatch>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(self), microphone=(), geolocation=()"
+  Header always set X-Frame-Options "SAMEORIGIN"
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript application/json application/manifest+json image/svg+xml
+</IfModule>
