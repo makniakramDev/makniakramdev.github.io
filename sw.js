@@ -1,7 +1,7 @@
-/* #EpikNOW service worker — offline cache + OneSignal Web Push. Build: mwwwv8jr */
+/* #EpikNOW service worker — offline cache + OneSignal Web Push. Build: mwwx4lts */
 try { importScripts('https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.sw.js'); } catch (e) { /* offline at install: push loads next time */ }
 
-const CACHE = 'epiknow-mwwwv8jr';
+const CACHE = 'epiknow-mwwx4lts';
 const SHELL = ['/', '/manifest.webmanifest', '/img/logo-now.png', '/img/epik-white.png', '/img/coin.png', '/img/background.jpg',
   '/fonts/bebas-neue.woff2', '/fonts/cairo.woff2', '/icons/icon-192.png'];
 
